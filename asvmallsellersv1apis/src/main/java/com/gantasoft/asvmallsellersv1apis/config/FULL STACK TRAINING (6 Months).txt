@@ -1,0 +1,6 @@
+FULL STACK TRAINING (6 Months) 
+Java Full Stack Development Course – Kosmik Solutions
+• Covered Java, Spring Boot, Hibernate, React.js, JDBC, MySQL. 
+• Hands-on training on REST API development and frontend integration. 
+• Built sellers Web Application (React, Spring Boot, MySQL), Product listing, cart, and login system using JWT and Implemented REST APIs, database schema, and UI components.
+	

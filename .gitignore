@@ -1,0 +1,16 @@
+# React / Node
+avsmall-app/node_modules/
+avsmall-app/build/
+avsmall-app/.env
+
+# Spring Boot / Java
+asvmallsellersv1apis/target/
+asvmallsellersv1apis/*.jar
+asvmallsellersv1apis/*.war
+asvmallsellersv1apis/.idea/
+asvmallsellersv1apis/*.iml
+*.class
+
+# OS / IDE
+.DS_Store
+Thumbs.db
