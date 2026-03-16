@@ -10,20 +10,24 @@ export default function AddNewProducts() {
     category: "",
     price: "",
     sku: "",
+    stock: "",
     description: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const API_URL = "http://localhost:9010/api/products";
+  const API_URL = "http://localhost:9020/api/products";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProduct((prev) => ({ ...prev, [name]: value }));
+    setProduct((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // Save product (draft or published)
+  // Save product (draft or active)
   const saveProduct = async (status, redirectToMedia = false) => {
     setLoading(true);
     setError("");
@@ -33,11 +37,10 @@ export default function AddNewProducts() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
         },
         body: JSON.stringify({
           ...product,
-          status, 
+          status,
         }),
       });
 
@@ -56,6 +59,17 @@ export default function AddNewProducts() {
             : "Product saved successfully!"
         );
       }
+
+      // Reset form
+      setProduct({
+        title: "",
+        category: "",
+        price: "",
+        sku: "",
+        stock: "",
+        description: "",
+      });
+
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -69,10 +83,14 @@ export default function AddNewProducts() {
 
       <div className="flex justify-center w-full mt-4">
         <div className="w-full max-w-5xl bg-white border rounded-xl p-6 shadow-sm">
+
           <form className="space-y-6">
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* LEFT side */}
+
+              {/* LEFT SIDE */}
               <div className="space-y-4">
+
                 <input
                   name="title"
                   placeholder="Blue Cotton Shirt"
@@ -90,6 +108,15 @@ export default function AddNewProducts() {
                   className="w-full border p-2 rounded"
                 />
 
+                <input
+                  name="stock"
+                  type="number"
+                  placeholder="Stock Quantity"
+                  value={product.stock}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded"
+                />
+
                 <textarea
                   name="description"
                   placeholder="High quality cotton shirt..."
@@ -98,10 +125,12 @@ export default function AddNewProducts() {
                   rows={4}
                   className="w-full border p-2 rounded"
                 />
+
               </div>
 
-              {/* RIGHT side */}
+              {/* RIGHT SIDE */}
               <div className="space-y-4">
+
                 <select
                   name="category"
                   value={product.category}
@@ -121,16 +150,19 @@ export default function AddNewProducts() {
                   onChange={handleChange}
                   className="w-full border p-2 rounded"
                 />
+
               </div>
+
             </div>
 
-            {/* ERROR */}
+            {/* ERROR MESSAGE */}
             {error && (
               <p className="text-red-500 text-sm">{error}</p>
             )}
 
-            {/* ACTION BUTTONS */}
+            {/* BUTTONS */}
             <div className="flex gap-6 items-center mt-6">
+
               <button
                 type="button"
                 disabled={loading}
@@ -152,15 +184,19 @@ export default function AddNewProducts() {
               <button
                 type="button"
                 disabled={loading}
-                onClick={() => saveProduct("PUBLISHED")}
+                onClick={() => saveProduct("ACTIVE")}
                 className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 Save Product
               </button>
+
             </div>
+
           </form>
+
         </div>
       </div>
     </div>
   );
 }
+

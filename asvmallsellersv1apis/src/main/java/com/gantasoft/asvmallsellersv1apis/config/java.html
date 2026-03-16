@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Selection Sort Visualizer</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 20px 0 10px;
+  }
+
+  #controls {
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #startBtn { background: #22c55e; color: black; }
+  #resetBtn { background: #ef4444; color: white; }
+
+  input[type="range"] {
+    vertical-align: middle;
+  }
+
+  #array {
+    display: flex;
+    align-items: flex-end;
+    height: 400px;
+    width: 90%;
+    max-width: 1000px;
+    border: 2px solid #334155;
+    padding: 10px;
+  }
+
+  .bar {
+    background: #3b82f6;
+    margin: 0 2px;
+    flex: 1;
+    transition: height 0.3s ease, background 0.3s ease;
+  }
+
+  .active { background: #f59e0b !important; }
+  .min { background: #ef4444 !important; }
+  .sorted { background: #22c55e !important; }
+</style>
+</head>
+<body>
+
+<h1>Selection Sort Visualizer</h1>
+
+<div id="controls">
+  <button id="startBtn">Start</button>
+  <button id="resetBtn">Reset</button>
+  Speed: <input type="range" id="speed" min="50" max="1000" value="300">
+</div>
+
+<div id="array"></div>
+
+<script>
+let array = [];
+let delay = 300;
+const arrayContainer = document.getElementById("array");
+const speedSlider = document.getElementById("speed");
+
+speedSlider.addEventListener("input", () => {
+  delay = 1050 - speedSlider.value;
+});
+
+function generateArray(size = 40) {
+  array = [];
+  arrayContainer.innerHTML = "";
+  for (let i = 0; i < size; i++) {
+    const value = Math.floor(Math.random() * 350) + 20;
+    array.push(value);
+    const bar = document.createElement("div");
+    bar.classList.add("bar");
+    bar.style.height = value + "px";
+    arrayContainer.appendChild(bar);
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function selectionSort() {
+  const bars = document.getElementsByClassName("bar");
+  for (let i = 0; i < array.length; i++) {
+    let minIndex = i;
+    bars[i].classList.add("active");
+
+    for (let j = i + 1; j < array.length; j++) {
+      bars[j].classList.add("min");
+      await sleep(delay);
+
+      if (array[j] < array[minIndex]) {
+        if (minIndex !== i) bars[minIndex].classList.remove("min");
+        minIndex = j;
+      } else {
+        bars[j].classList.remove("min");
+      }
+    }
+
+    if (minIndex !== i) {
+      [array[i], array[minIndex]] = [array[minIndex], array[i]];
+      bars[i].style.height = array[i] + "px";
+      bars[minIndex].style.height = array[minIndex] + "px";
+    }
+
+    bars[i].classList.remove("active");
+    bars[i].classList.add("sorted");
+    if (minIndex !== i) bars[minIndex].classList.remove("min");
+  }
+}
+
+document.getElementById("startBtn").addEventListener("click", () => {
+  selectionSort();
+});
+
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  generateArray();
+});
+
+// Initial array
+generateArray();
+</script>
+
+</body>
+</html>

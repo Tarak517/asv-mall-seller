@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Merge Sort Number Swap Visualizer</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 { margin: 20px 0; }
+
+  #controls { margin-bottom: 20px; }
+
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #startBtn { background: #22c55e; color: black; }
+  #resetBtn { background: #ef4444; color: white; }
+
+  #array {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+    max-width: 1000px;
+  }
+
+  .box {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #3b82f6;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .active { background: #f59e0b !important; }
+  .sorted { background: #22c55e !important; }
+</style>
+</head>
+<body>
+
+<h1>Merge Sort (Number Swap Style)</h1>
+
+<div id="controls">
+  <button id="startBtn">Start</button>
+  <button id="resetBtn">Reset</button>
+  Speed: <input type="range" id="speed" min="100" max="1000" value="500">
+</div>
+
+<div id="array"></div>
+
+<script>
+let array = [];
+let delay = 500;
+
+const speedSlider = document.getElementById("speed");
+speedSlider.addEventListener("input", () => {
+  delay = parseInt(speedSlider.value);
+});
+let isSorting = false;
+
+const arrayContainer = document.getElementById("array");
+
+function generateArray(size = 10) {
+  array = [];
+  arrayContainer.innerHTML = "";
+  for (let i = 0; i < size; i++) {
+    const value = Math.floor(Math.random() * 99) + 1;
+    array.push(value);
+    const box = document.createElement("div");
+    box.classList.add("box");
+    box.textContent = value;
+    arrayContainer.appendChild(box);
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function mergeSort(start, end) {
+  if (start >= end) return;
+
+  const mid = Math.floor((start + end) / 2);
+  await mergeSort(start, mid);
+  await mergeSort(mid + 1, end);
+  await merge(start, mid, end);
+}
+
+async function merge(start, mid, end) {
+  const boxes = document.getElementsByClassName("box");
+  let left = array.slice(start, mid + 1);
+  let right = array.slice(mid + 1, end + 1);
+
+  let i = 0, j = 0, k = start;
+
+  while (i < left.length && j < right.length) {
+    boxes[k].classList.add("active");
+    await sleep(delay);
+
+    if (left[i] <= right[j]) {
+      array[k] = left[i];
+      boxes[k].textContent = left[i];
+      i++;
+    } else {
+      array[k] = right[j];
+      boxes[k].textContent = right[j];
+      j++;
+    }
+
+    boxes[k].classList.remove("active");
+    k++;
+  }
+
+  while (i < left.length) {
+    boxes[k].classList.add("active");
+    await sleep(delay);
+
+    array[k] = left[i];
+    boxes[k].textContent = left[i];
+
+    boxes[k].classList.remove("active");
+    i++;
+    k++;
+  }
+
+  while (j < right.length) {
+    boxes[k].classList.add("active");
+    await sleep(delay);
+
+    array[k] = right[j];
+    boxes[k].textContent = right[j];
+
+    boxes[k].classList.remove("active");
+    j++;
+    k++;
+  }
+}
+
+async function startSorting() {
+  if (isSorting) return;
+  isSorting = true;
+
+  await mergeSort(0, array.length - 1);
+
+  const boxes = document.getElementsByClassName("box");
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].classList.add("sorted");
+  }
+
+  isSorting = false;
+}
+
+document.getElementById("startBtn").addEventListener("click", startSorting);
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (!isSorting) generateArray();
+});
+
+// Initial array
+generateArray();
+</script>
+
+</body>
+</html>

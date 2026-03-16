@@ -5,11 +5,10 @@ export default function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const API_BASE = "http://localhost:9010/api/products"; // 🔴 change if needed
-
+  const API_BASE = "http://localhost:9020/api/products"; 
   const [product, setProduct] = useState({
     title: "",
-    status: "PUBLISHED",
+    status: "DRAFT",
     price: "",
     sku: "",
     description: "",
@@ -35,7 +34,7 @@ export default function EditProduct() {
 
         setProduct({
           title: data.title || "",
-          status: data.status || "PUBLISHED",
+          status: data.status || "DRAFT",
           price: data.price || "",
           sku: data.sku || "",
           description: data.description || "",
@@ -170,7 +169,6 @@ export default function EditProduct() {
                 className="w-full border rounded-md p-2"
               >
                 <option value="DRAFT">Draft</option>
-                <option value="PUBLISHED">Published</option>
                 <option value="INACTIVE">Inactive</option>
               </select>
             </div>

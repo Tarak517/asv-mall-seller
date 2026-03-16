@@ -6,7 +6,11 @@ import java.io.Serializable;
 @Embeddable
 public class ProductCategoryId implements Serializable {
 
-    private Long productId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Long productId;
     private Long categoryId;
 
     // Default constructor (required by JPA)

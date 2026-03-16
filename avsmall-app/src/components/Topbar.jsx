@@ -39,7 +39,6 @@ export default function Topbar({ title, toggleSidebar }) {
             focus:outline-none focus:ring-2 focus:ring-blue-500
           "
         />
-
         {/* User Avatar */}
         <img
           src="/AVSMall.jpg"

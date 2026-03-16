@@ -16,7 +16,7 @@ export default function Analytics() {
       <Topbar title="Analytics" />
 
       <div className="pt-0 px-0 max-w-6xl mx-auto">
-
+         
         {/* Tabs */}
         <div className="flex gap-6 border-b mb-6">
           <div className={tabClass("sales")} onClick={() => setActiveTab("sales")}>

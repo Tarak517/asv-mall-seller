@@ -3,58 +3,92 @@ package com.gantasoft.asvmallsellersv1apis.service;
 import com.gantasoft.asvmallsellersv1apis.entity.Product;
 import com.gantasoft.asvmallsellersv1apis.entity.ProductImage;
 import com.gantasoft.asvmallsellersv1apis.repository.ProductImageRepository;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.nio.file.*;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductImageService {
 
     private final ProductImageRepository repo;
+    private final Path uploadPath = Paths.get("uploads");
 
     public ProductImageService(ProductImageRepository repo) {
         this.repo = repo;
-    }
 
-    // Save a ProductImage entity
-    public ProductImage save(ProductImage image) {
-        return repo.save(image);
-    }
-
-    // Save an image for a Product
-    public void saveImage(Product product, MultipartFile image) {
         try {
-            if (image == null || image.isEmpty()) return;
-
-            // For simplicity, store only the filename as URL
-            String filename = image.getOriginalFilename();
-
-            ProductImage productImage = new ProductImage();
-            productImage.setProduct(product);          // Link to Product
-            productImage.setUrl(filename);             // Save filename (or path)
-            productImage.setCreatedAt(LocalDateTime.now());
-            productImage.setUpdatedAt(LocalDateTime.now());
-
-            repo.save(productImage);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to save image", e);
+            Files.createDirectories(uploadPath);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create upload folder");
         }
     }
 
-    // Get all product images
-    public List<ProductImage> getAll() {
-        return repo.findAll();
+    public ProductImage saveImage(Product product, MultipartFile file) {
+
+        try {
+
+            String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+            Path target = uploadPath.resolve(filename);
+
+            Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
+
+            ProductImage image = new ProductImage();
+
+            image.setProduct(product);
+            image.setUrl(filename);
+
+            List<ProductImage> images = repo.findByProductProductId(product.getProductId());
+
+            image.setSortOrder(images.size());
+            image.setIsPrimary(images.isEmpty());
+
+            return repo.save(image);
+
+        } catch (IOException e) {
+            throw new RuntimeException("File upload failed");
+        }
     }
 
-    // Get images by product ID
     public List<ProductImage> getByProductId(Long productId) {
         return repo.findByProductProductId(productId);
     }
 
-    // Delete image by ID
+    public ProductImage getById(Long id) {
+        return repo.findById(id).orElseThrow();
+    }
+
+    public Resource loadFile(String filename) {
+
+        try {
+
+            Path file = uploadPath.resolve(filename).normalize();
+
+            return new UrlResource(file.toUri());
+
+        } catch (Exception e) {
+            throw new RuntimeException("File not found");
+        }
+    }
+
     public void delete(Long id) {
+
+        ProductImage img = getById(id);
+
+        try {
+
+            Files.deleteIfExists(uploadPath.resolve(img.getUrl()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         repo.deleteById(id);
     }
 }

@@ -15,7 +15,7 @@ export default function ProductPreview() {
     if (!id) return;
 
     axios
-      .get(`http://localhost:9010/api/products/${id}`, {
+      .get(`http://localhost:9020/api/products/${id}`, {
         auth: {
           username: "user",
           password: "b804e35c-5a21-4a43-a8ff-0c947f278a5d",

@@ -32,6 +32,19 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    // NEW FIELDS
+    @Column(name = "sku")
+    private String sku;
+
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "stock")
+    private Integer stock;
+
+    @Column(name = "category")
+    private String category;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProductStatus status;
@@ -42,7 +55,8 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    // --- Getters & Setters ---
+    // GETTERS & SETTERS
+
     public Long getProductId() { return productId; }
     public void setProductId(Long productId) { this.productId = productId; }
 
@@ -60,6 +74,18 @@ public class Product {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
+
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
+
+    public Integer getStock() { return stock; }
+    public void setStock(Integer stock) { this.stock = stock; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
     public ProductStatus getStatus() { return status; }
     public void setStatus(ProductStatus status) { this.status = status; }

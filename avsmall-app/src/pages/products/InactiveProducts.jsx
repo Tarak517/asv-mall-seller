@@ -10,7 +10,7 @@ export default function InactiveProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const API_URL = "http://localhost:9010/api/products?status=INACTIVE"; 
+  const API_URL = "http://localhost:9020/api/products?status=INACTIVE"; 
 
   // Fetch inactive products
   useEffect(() => {

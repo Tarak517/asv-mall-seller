@@ -15,7 +15,6 @@ export default function AdminLayout() {
       .slice(-1)[0]
       ?.replace(/-/g, " ")
       ?.replace(/\b\w/g, (c) => c.toUpperCase()) || "Seller Admin";
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Navigation Bar */}
@@ -23,11 +22,9 @@ export default function AdminLayout() {
       title={title}
       toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
       />
-
       <div className="flex">
         {/* Sidebar Navigation */}
         <Sidebar isOpen={sidebarOpen} />
-
         {/* Main Content */}
         <div className="flex-1 pt-14 md:ml-64">
           <main className="p-4">
@@ -37,4 +34,4 @@ export default function AdminLayout() {
       </div>
     </div>
   );
-}
+}  
