@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+# ASV Mall Seller Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack seller management platform for managing products, orders, inventory, and analytics.
 
-## Available Scripts
+This project includes a **React frontend** and **Spring Boot backend** for managing an e-commerce seller dashboard.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Seller Dashboard Overview
+* Product Management (Add / Edit / View Products)
+* Inventory Management
+* Sales Analytics
+* Order Tracking
+* Image Upload API
+* Category and SKU management
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Frontend
 
-### `npm run build`
+* React
+* Tailwind CSS
+* React Router
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Backend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Spring Boot
+* JPA / Hibernate
+* MySQL
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Other Tools
 
-### `npm run eject`
+* Git
+* GitHub
+* Postman
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+project-root
+│
+├── avsmall-app (React Frontend)
+├── asvmallsellersv1apis (Spring Boot Backend)
+├── screenshots
+└── README.md
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Screenshots
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Seller Dashboard
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Dashboard](screenshots/Dasboard.jpg)
 
-### Code Splitting
+### Analytics Page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![Analytics](screenshots/Analytics.jpg)
 
-### Analyzing the Bundle Size
+### Product Management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Products](screenshots/viewallproducts.jpg)
 
-### Making a Progressive Web App
+### Inventory Page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![Inventory](screenshots/inventory.jpg)
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Running the Frontend
 
-### Deployment
+```
+cd avsmall-app
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Open:
 
-### `npm run build` fails to minify
+http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## Running the Backend
+
+```
+cd asvmallsellersv1apis
+mvn spring-boot:run
+```
+
+Backend runs on:
+
+```
+http://localhost:9020
+```
+
+---
+
+## Future Improvements
+
+* Payment integration
+* Order notifications
+* Advanced analytics charts
+* Seller reports
+* Role based authentication
+
+---
+
+## Author
+
+Taraka Ramarao
+
+GitHub: https://github.com/
